@@ -2,22 +2,60 @@ const WHATSAPP_NUMBER = "9765356364";
 
 // Product list
 
+// PRODUCTS (with + / −)
 const products = [
   "Lays Chips (All Flavours)",
   "Balaji Chips (All Flavours)",
   "Parle Biscuits (All Varieties)",
   "Britannia Biscuits (All Varieties)",
-  "Sunfeast Biscuits (All Varieties)",
   "Cup Ice Creams",
-  "Candy Ice Creams",
   "Cone Ice Creams",
   "Apsara Pencils",
   "Natraj Pencils",
-  "Pens",
-  "Xerox (Per Page)",
+  "All Brand Pens"
+];
+
+// SERVICES (NO + / −)
+const services = [
+  "Xerox",
   "Printing",
   "Lamination"
 ];
+
+// Show services
+const servicesDiv = document.getElementById("servicesSection");
+
+services.forEach(service => {
+  const div = document.createElement("div");
+  div.style.background = "white";
+  div.style.padding = "10px";
+  div.style.marginBottom = "10px";
+  div.style.borderRadius = "6px";
+
+  const name = document.createElement("strong");
+  name.textContent = service;
+
+  const note = document.createElement("p");
+  note.textContent = "Send files on WhatsApp for this service.";
+
+  const btn = document.createElement("button");
+  btn.textContent = "Contact on WhatsApp";
+  btn.onclick = () => {
+    const msg = encodeURIComponent(
+      "Hello, I want to use " + service + " service. I will send the files here."
+    );
+    window.open(
+      "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + msg,
+      "_blank"
+    );
+  };
+
+  div.appendChild(name);
+  div.appendChild(note);
+  div.appendChild(btn);
+
+  servicesDiv.appendChild(div);
+});
 
 // Store quantities here
 const cart = {};
@@ -104,6 +142,19 @@ function sendToWhatsApp() {
   }
 
   message += "\nPickup only. Payment at shop.\nThank you.";
+
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappURL =
+    "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodedMessage;
+
+  window.open(whatsappURL, "_blank");
+}
+
+function sendPrintOrder() {
+  const message =
+    "Hello, I want to use Printing / Lamination service.\n\n" +
+    "I am sending the files here.\n\n" +
+    "Pickup only. Please confirm price.";
 
   const encodedMessage = encodeURIComponent(message);
   const whatsappURL =
